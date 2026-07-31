@@ -1,4 +1,4 @@
-# 📦 Sistema de Estoque em Python
+#  Sistema de Estoque em Python
 
 Sistema de gerenciamento de estoque desenvolvido em **Python**, criado com o objetivo de praticar conceitos fundamentais de programação e evoluir conhecimentos em **Programação Orientada a Objetos (POO)**, manipulação de arquivos e organização de projetos.
 
@@ -8,19 +8,19 @@ O projeto começou como uma aplicação simples e foi evoluindo para um sistema 
 
 ## 🚀 Funcionalidades
 
-✅ Cadastro de produtos
-✅ Geração automática de IDs
-✅ Consulta de produtos por ID
-✅ Alteração de informações do produto
-✅ Remoção de produtos do estoque
-✅ Armazenamento permanente dos dados em JSON
-✅ Recuperação dos dados ao iniciar o programa
-✅ Conversão entre objetos Python e dicionários para manipulação do JSON
-✅ Limpeza completa do estoque
+ Cadastro de produtos
+ Geração automática de IDs
+ Consulta de produtos por ID
+ Alteração de informações do produto
+ Remoção de produtos do estoque
+ Armazenamento permanente dos dados em JSON
+ Recuperação dos dados ao iniciar o programa
+ Conversão entre objetos Python e dicionários para manipulação do JSON
+ Limpeza completa do estoque
 
 ---
 
-## 🧠 Conceitos praticados
+##  Conceitos praticados
 
 Durante o desenvolvimento foram aplicados conceitos como:
 
@@ -56,7 +56,7 @@ Sistema-Estoque/
 
 ---
 
-## 💾 Persistência de dados
+##  Persistência de dados
 
 O sistema utiliza um arquivo JSON como armazenamento.
 
@@ -84,7 +84,7 @@ Isso permite que os produtos continuem salvos mesmo após fechar o programa.
 
 ---
 
-## 🛠️ Tecnologias utilizadas
+##  Tecnologias utilizadas
 
 * Python 3
 * JSON
@@ -93,7 +93,7 @@ Isso permite que os produtos continuem salvos mesmo após fechar o programa.
 
 ---
 
-## 📌 Exemplo de funcionamento
+##  Exemplo de funcionamento
 
 Cadastro de produto:
 
@@ -117,7 +117,7 @@ Após salvar:
 
 ---
 
-## 📈 Evolução do projeto
+##  Evolução do projeto
 
 Este projeto foi desenvolvido como prática de aprendizado em Python, evoluindo conforme novos conceitos foram aprendidos.
 
@@ -133,7 +133,7 @@ O objetivo é continuar evoluindo o projeto adicionando novas funcionalidades e 
 
 ---
 
-## 👩‍💻 Desenvolvido por
+##  Desenvolvido por
 
 **Vinicius Cancellara**
 
