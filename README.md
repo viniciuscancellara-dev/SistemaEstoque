@@ -6,7 +6,7 @@ O projeto começou como uma aplicação simples e foi evoluindo para um sistema 
 
 ---
 
-## 🚀 Funcionalidades
+##  Funcionalidades
 
  Cadastro de produtos
  Geração automática de IDs
