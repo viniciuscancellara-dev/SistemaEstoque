@@ -1,6 +1,6 @@
 #  Sistema de Estoque em Python
 
-Sistema de gerenciamento de estoque desenvolvido em **Python**, criado com o objetivo de praticar conceitos fundamentais de programação e evoluir conhecimentos em **Programação Orientada a Objetos (POO)**, manipulação de arquivos e organização de projetos.
+Sistema de gerenciamento de estoque desenvolvido em Python utilizando Programação Orientada a Objetos, com herança, encapsulamento, polimorfismo e persistência de dados em JSON.
 
 O projeto começou como uma aplicação simples e foi evoluindo para um sistema estruturado utilizando classes, objetos e persistência de dados em arquivos JSON.
 
