@@ -41,7 +41,9 @@ class Eletronico(Produto):
         return self.__garantia
     @garantia.setter
     def garantia(self,nova_garantia):
-        pass
+        if nova_garantia <0:
+            raise ValueError("A garantia deve ser de no minimo 0 anos!")
+        self.__garantia = nova_garantia
 
     def __str__(self):
         return f"ID : {self.id} - Produto : {self.nome} - Preco :R$ {self.preco} - Quantidade : {self.quantidade} - Garantia : {self.__garantia} - Voltagem : {self.voltagem}."
@@ -57,7 +59,9 @@ class Alimento(Produto):
         return self.__validade
     @validade.setter
     def validade(self, nova_validade):
-        pass
+        if not nova_validade:
+            raise ValueError("O campo deve ser preenchido!")
+        self.__validade = nova_validade 
 
     def __str__(self):
         return f"ID : {self.id} - Produto : {self.nome} - Preco :R$ {self.preco} - Quantidade : {self.quantidade} - Peso : {self.peso} - Validade : {self.__validade}."
@@ -73,14 +77,18 @@ class Roupa(Produto):
         return self.__tamanho
     @tamanho.setter
     def tamanho(self,novo_tamanho):
-        pass
+        if not novo_tamanho:
+            raise ValueError("O campo deve ser preenchido!")
+        self.__tamanho = novo_tamanho
 
     @property
     def marca(self):
         return self.__marca
     @marca.setter
     def marca(self,nova_marca):
-        pass
+        if not nova_marca:
+            raise ValueError("O campo deve ser preenchido!")
+        self.__marca = nova_marca
 
     def __str__(self):
         return f"ID : {self.id} - Produto : {self.nome} - Preco :R$ {self.preco} - Quantidade : {self.quantidade} - Tamanho : {self.__tamanho} - Marca : {self.__marca}."

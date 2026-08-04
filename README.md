@@ -31,6 +31,8 @@ Durante o desenvolvimento foram aplicados conceitos como:
 * Métodos de classe
 * Encapsulamento de atributos
 * Uso de propriedades (`@property`)
+* Herancas
+* Polimorfismo
 
 ### Manipulação de dados
 

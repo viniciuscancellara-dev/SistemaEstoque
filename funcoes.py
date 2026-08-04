@@ -10,18 +10,73 @@ def limpar_tela():
 
 
 def produto_para_dict(produto):
-    return {
+
+    dados = {
+        "tipo": produto.__class__.__name__,
         "id": produto.id,
         "nome": produto.nome,
         "preco": produto.preco,
-        "quantidade": produto.quantidade,
+        "quantidade": produto.quantidade
     }
+
+    if isinstance(produto, Eletronico):
+        dados["garantia"] = produto.garantia
+        dados["voltagem"] = produto.voltagem
+
+    elif isinstance(produto, Alimento):
+        dados["peso"] = produto.peso
+        dados["validade"] = produto.validade
+
+    elif isinstance(produto, Roupa):
+        dados["tamanho"] = produto.tamanho
+        dados["marca"] = produto.marca
+
+    return dados
 
 
 def dict_para_produto(dados):
-    return Produto(
-        dados["id"], dados["nome"], dados["preco"], dados["quantidade"]
-    )
+
+    tipo = dados["tipo"]
+
+    match tipo:
+
+        case "Eletronico":
+            return Eletronico(
+                dados["id"],
+                dados["nome"],
+                dados["preco"],
+                dados["quantidade"],
+                dados["garantia"],
+                dados["voltagem"]
+            )
+
+        case "Alimento":
+            return Alimento(
+                dados["id"],
+                dados["nome"],
+                dados["preco"],
+                dados["quantidade"],
+                dados["peso"],
+                dados["validade"]
+            )
+
+        case "Roupa":
+            return Roupa(
+                dados["id"],
+                dados["nome"],
+                dados["preco"],
+                dados["quantidade"],
+                dados["tamanho"],
+                dados["marca"]
+            )
+
+        case _:
+            return Produto(
+                dados["id"],
+                dados["nome"],
+                dados["preco"],
+                dados["quantidade"]
+            )
 
 def carregar_estoque():
     try:
@@ -246,31 +301,36 @@ def consulta():
 
 # mudei o nome para fazer mais sentido
 def alterar_produto():
+
     produto = consulta()
+
     if not produto:
         return
 
-    print("\n" + "=" * 45)
-    print("          ALTERAR PRODUTO")
-    print("=" * 45)
+    produto.preco = float(input("Novo preço: R$ "))
+    produto.quantidade = int(input("Nova quantidade: "))
 
-    while True:
-        try:
-            novo_preco = float(input("\nDigite o novo preco: "))
-            nova_quantidade = int(input("Digite a nova quantidade: "))
-        except ValueError as error:
-            print(error)
-            continue
-        break
+    if isinstance(produto, Eletronico):
+        garantia = int(input("Nova garantia: "))
+        voltagem = int(input("Nova voltagem: "))
 
-    produto.preco = novo_preco
-    produto.quantidade = nova_quantidade
+        produto.garantia = garantia
+        produto.voltagem = voltagem
 
-    print("")
-    print(produto)
-    print("=" * 45)
+    elif isinstance(produto, Alimento):
+        peso = int(input("Novo peso: "))
+        validade = input("Nova validade: ")
 
-    # Salva as alterações no JSON
+        produto.peso = peso
+        produto.validade = validade
+
+    elif isinstance(produto, Roupa):
+        tamanho = int(input("Novo tamanho: "))
+        marca = input("Nova marca: ")
+
+        produto.tamanho = tamanho
+        produto.marca = marca
+
     salvar(estoque)
 
 def mostrar_estoque():
