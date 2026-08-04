@@ -1,11 +1,27 @@
 import json
 import os
-from classes import Produto
+from classes import *
 
 
 def limpar_tela():
     os.system("cls" if os.name == "nt" else "clear")
 
+
+
+
+def produto_para_dict(produto):
+    return {
+        "id": produto.id,
+        "nome": produto.nome,
+        "preco": produto.preco,
+        "quantidade": produto.quantidade,
+    }
+
+
+def dict_para_produto(dados):
+    return Produto(
+        dados["id"], dados["nome"], dados["preco"], dados["quantidade"]
+    )
 
 def carregar_estoque():
     try:
@@ -27,21 +43,6 @@ def carregar_estoque():
 estoque = carregar_estoque()
 
 
-def produto_para_dict(produto):
-    return {
-        "id": produto.id,
-        "nome": produto.nome,
-        "preco": produto.preco,
-        "quantidade": produto.quantidade,
-    }
-
-
-def dict_para_produto(dados):
-    return Produto(
-        dados["id"], dados["nome"], dados["preco"], dados["quantidade"]
-    )
-
-
 def salvar(estoque):
     dados = []
     for produto in estoque:
@@ -49,7 +50,6 @@ def salvar(estoque):
 
     with open("estoque.json", "w") as arq:
         json.dump(dados, arq, indent=4)
-
 
 def adicionar_produto():
     limpar_tela()
@@ -77,16 +77,36 @@ def adicionar_produto():
 
     id = maior_id + 1
 
+    print("""
+    -----------------------
+    Qual o tipo do produto?
+    -----------------------
+
+    1- Eletronicos
+    2- Alimentos
+    3- Roupas
+    """)
+    while True:
+        try:
+            escolha = int(input("Escolha uma opcao 1 - 3: "))
+        except ValueError:
+            print("Valor invalido!")
+            continue
+        if escolha not in(1,2,3):
+            print("Valor indefinido!")
+            continue
+        break
+
+
     for i in range(quantity):
         print("\n" + "-" * 30)
         nome = input(f"Digite o nome do produto {i+1}: ").lower()
 
         while True:
             try:
-                preco = float(input("Preco do produto?: "))
+                preco = float(input("Preco do produto: R$ "))
                 quantidade = int(
-                    input(f"Quantos {nome} existe no estoque?: ")
-                )
+                    input(f"Quantos {nome} existe no estoque?: "))
             except ValueError:
                 print("Valor invalido")
                 continue
@@ -94,17 +114,57 @@ def adicionar_produto():
             if preco < 0 or quantidade < 0:
                 print("Valor deve ser maior que 0")
                 continue
-            else:
-                break
 
-        produto = Produto(id, nome, preco, quantidade)
+            match escolha:
+                case 1:
+                    while True:
+                        try:
+                            garantia = int(input("Digite a garantia: "))
+                            voltagem = int(input("Digite a voltagem: "))
+                        except ValueError:
+                            print("Valor invalido!")
+                            continue
+                        if voltagem<=0:
+                            print("Voltagem nao pode ser igual a 0")
+                            continue
+                        break
+                    produto = Eletronico(id,nome,preco,quantidade,garantia,voltagem)
+                    break
+                case 2:
+                    while True:
+                        try:
+                            peso = int(input("Digite o peso (KG): "))
+                            validade = str(input("Digite a data de validade"))
+                        except (ValueError):
+                            print("Valor invalido!")
+                            continue
+                        if peso <0 or not validade:
+                            print("Peso nao poder ser 0, e a data de validade deve ser preenchida!") 
+                            continue
+                        break
+                    produto = Alimento(id,nome,preco,quantidade,peso,validade)
+                    break
+                case 3:
+                    while True:
+                        try:
+                            tamanho = str(input("Digite o tamanho: "))
+                            marca = str(input("Digite a marca: ")).lower()
+                        except (ValueError):
+                            print("Valor invalido!")
+                            continue
+                        if not tamanho  or not marca:
+                            print("Tamanho nao pode ser menor ou igual a zero, e o campo marca deve ser preenchida!")
+                            continue
+                        break
+                    produto = Roupa(id,nome,preco,quantidade,tamanho,marca)
+                    break
+
         estoque.append(produto)
         id += 1
 
     #  Salva as alterações no JSON
     salvar(estoque)
     print("\n" + "=" * 45)
-
 
 def remover_produto():
     limpar_tela()
@@ -124,11 +184,7 @@ def remover_produto():
     while True:
         try:
             #  Alterado para buscar por ID em vez de Nome para evitar confusao
-            id_remocao = int(
-                input(
-                    "\nDigite o ID do produto que deseja remover do estoque: "
-                )
-            )
+            id_remocao = int(input("\nDigite o ID do produto que deseja remover do estoque: "))
         except ValueError:
             print("ID invalido")
             continue
@@ -202,18 +258,13 @@ def alterar_produto():
         try:
             novo_preco = float(input("\nDigite o novo preco: "))
             nova_quantidade = int(input("Digite a nova quantidade: "))
-        except ValueError:
-            print("valor invalido!")
+        except ValueError as error:
+            print(error)
             continue
+        break
 
-        if novo_preco < 0 or nova_quantidade < 0:
-            print("Valor invalido! (Valor deve ser maior que 0)")
-        else:
-            print("\nOk")
-            break
-
-    produto.alterar_preco(novo_preco)
-    produto.alterar_quantidade(nova_quantidade)
+    produto.preco = novo_preco
+    produto.quantidade = nova_quantidade
 
     print("")
     print(produto)
@@ -221,6 +272,15 @@ def alterar_produto():
 
     # Salva as alterações no JSON
     salvar(estoque)
+
+def mostrar_estoque():
+    if not estoque:
+        print("Estoque vazio!")
+        return
+    with open("estoque.json","r")as arq:
+        mostrar = json.load(arq)
+    print(json.dumps(mostrar, indent=4))
+        
 
 
 def apagar_lista():
@@ -236,7 +296,7 @@ def apagar_lista():
 
         match pergunta:
             case "s":
-                # Apaga na memória RAM e salva a lista vazia no JSON
+                # Apaga a lista e o json
                 estoque.clear()
                 salvar(estoque)
                 print("\nOk! Apagando a lista... Lista apagada com sucesso!")

@@ -9,7 +9,8 @@ def menu():
 3 - Consultar produto
 4 - Alterar produto
 5 - Apagar estoque
-6 - Sair
+6 - Mostrar estoque
+7 - Sair
 
 ==============================
 """)

@@ -6,6 +6,7 @@ from funcoes import (
     remover_produto,
     consulta,
     alterar_produto,
+    mostrar_estoque,
     apagar_lista,
     salvar,
     estoque
@@ -62,8 +63,14 @@ while True:
 
             input("\nPressione ENTER para continuar...")
 
-
         case 6:
+            os.system("cls")
+            mostrar_estoque()
+
+            input("\nPressione ENTER para continuar...")
+
+
+        case 7:
             print("Encerrando programa...")
             break
 
